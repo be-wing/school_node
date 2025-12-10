@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    /* 基本設定 */
+    "target": "ES2020",/* ターゲットとするJavaScriptのバージョン (モダンなES2020/ES2021推奨) */
+    "module": "CommonJS",      /* 使用するモジュールシステム (Node.jsの標準) */
+    "rootDir": "./src",/* ソースファイルのルートディレクトリ */
+    "outDir": "./dist",/* コンパイルされたJavaScriptファイルの出力先 */
+    "esModuleInterop": true,   /* CommonJSモジュールをES Modulesとしてインポートできるようにする (必須) */
+    "forceConsistentCasingInFileNames": true,  /* ファイル名の大文字・小文字の不一致をエラーにする */
+    "resolveJsonModule": true, /* JSONファイルをモジュールとしてインポートできるようにする */
+
+
+    /* 厳密な型チェックオプション */
+    "strict": true,    /* 厳密な型チェックを全て有効にする（推奨） */
+    "skipLibCheck": true,      /* 依存ライブラリの型チェックをスキップし、コンパイル時間を短縮 */
+
+
+    /* モジュール解決とNode.js関連 */
+    "moduleResolution": "node",/* Node.jsのモジュール解決戦略を使用 */
+   
+    /* ソースマップとデバッグ */
+    "sourceMap": true, /* デバッグ用にSource Mapを生成する */
+
+
+    /* 型定義ファイル */
+    "typeRoots": ["./node_modules/@types"] /* 型定義ファイルの検索パス */
+  },
+  "include": [
+    "src/**/*.ts"      /* コンパイル対象とするファイル */
+  ],
+  "exclude": [
+    "node_modules"     /* コンパイル対象から除外するディレクトリ */
+  ]
+}

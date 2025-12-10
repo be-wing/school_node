@@ -1,0 +1,6 @@
+# 特定のディレクトリを無視する場合は先頭と末尾に/を付ける
+/node_modules/
+/dist/
+/build/
+/.env
+.DS_Store
