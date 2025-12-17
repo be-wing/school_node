@@ -1,23 +1,28 @@
 // src/index.ts
-
-
 import express, { Request, Response } from 'express';
 import * as path from 'path';
 import { read_data, write_data, getFormattedDate, Post } from './data/util';
 import sanitizeHtml from 'sanitize-html';
-
+import cors from 'cors';
 
 const app = express();
 const PORT = 3000;
 const BASE_URL = '/api';
 
+// ----------------------------------------------------
+// 2. CORSミドルウェアを適用
+// 開発環境では全てのオリジンからのアクセスを許可するため、cors() を引数なしで呼び出す
+// ----------------------------------------------------
+app.use(cors()); 
+
+// JSONリクエストボディを解析するためのミドルウェア
+app.use(express.json());
 
 // XSS対策用の設定 (全てのHTMLタグを除去)
 const sanitizeOptions = {
     allowedTags: [],
     allowedAttributes: {}
 };
-
 
 // ----------------------------------------------------
 // ミドルウェア設定
@@ -26,6 +31,8 @@ const sanitizeOptions = {
 app.use('/', express.static(path.join(__dirname, '..', 'frontend', 'dist')));
 // JSONリクエストボディのパース
 app.use(express.json());
+
+
 
 
 // ----------------------------------------------------

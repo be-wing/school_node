@@ -1,0 +1,134 @@
+/* ====================================
+   1. リセットと基本設定
+   ==================================== */
+:root {
+  --primary-color: #007bff; /* 青 */
+  --secondary-color: #6c757d; /* 灰色 */
+  --success-color: #28a745; /* 緑 */
+  --danger-color: #dc3545; /* 赤 */
+  --background-light: #f8f9fa;
+  --border-color: #dee2e6;
+  --font-family: 'Arial', sans-serif;
+}
+
+/* 全要素にボックスモデルを border-box に設定 */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-light);
+  color: #333;
+}
+
+/* ====================================
+   2. レイアウトとタイポグラフィ
+   ==================================== */
+.container {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 15px;
+  margin-bottom: 30px;
+}
+
+
+/* ====================================
+   4. 投稿一覧と個別要素 (PostList / PostItem)
+   ==================================== */
+
+/* 投稿一覧の親コンテナ */
+.post-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+/* 個別投稿アイテム */
+.post-item {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #fff;
+  transition: box-shadow 0.3s;
+}
+
+.post-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed var(--border-color);
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.post-author {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.post-date {
+  font-size: 0.85em;
+  color: var(--secondary-color);
+}
+
+.post-content {
+  margin-bottom: 15px;
+  white-space: pre-wrap; /* 改行を反映させる */
+}
+
+/* ====================================
+   5. ボタン群
+   ==================================== */
+
+.post-actions button {
+  padding: 8px 12px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: opacity 0.2s;
+}
+
+.post-actions button:hover {
+  opacity: 0.8;
+}
+
+.btn-edit {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.btn-delete {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+/* ====================================
+   6. ロード中メッセージなど
+   ==================================== */
+.loading-message, .error-message {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.1em;
+  color: var(--secondary-color);
+}
