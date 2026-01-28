@@ -3,9 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>プログラミング実習：簡易掲示板</title>
+    <style>
+        /* 【CSS】投稿カードのデザイン。枠線や余白を設定してください */
+        .post {
+            padding: 0.5em;
+            margin-bottom: 0.5em;
+            border: 1px solid #CCC;
+        }
+    </style>
 </head>
 <body>
-    <h1>テスト</h1>
+    <h1>簡易掲示板の作成</h1>
+    
+    <div>
+        <input type="hidden" id="postId">
+
+        名前：<input type="text" id="userName"><br>
+        内容：<textarea id="userContent"></textarea><br>
+        
+        <button type="button" id="submitBtn">送信</button>
+        <button type="button" id="editBtn" style="display: none;">編集</button>
+        <button type="button" id="cancelBtn" style="display: none;">キャンセル</button>
+    </div>
+
+    <div id="app"></div>
+
+    <script>
+        // 1. グローバル変数の定義
+        // 投稿一覧を表示するためのコンテナ要素を取得しておく
+        const app = document.getElementById('app');
+
+        /**
+         * 2. 関数：記事一覧を取得して描画する (GET)
+         * [処理フロー]
+         * ① fetchを使用して API(/api/list) からデータを取得
+         * ② 取得したJSONデータを解析
+         * ③ ループ処理(for)を用いて、記事ごとのHTML文字列を作成
+         * ④ 記事内に「削除」と「編集」ボタンを含め、value属性にIDをセットする
+         * ⑤ 最終的なHTMLを app要素のinnerHTMLに代入して表示
+         */
+        async function getPosts() {
+            const API_LIST_URL = 'http://localhost:3000/api/list';
+            try {
+                // 通信開始。結果が返ってくるまで次の行へ進まずに待機(await)
+                const response = await fetch();
+                
+                // HTTPレスポンスの本体(body)をJSONとして解析
+
+                let htmlContents = '<h2>記事一覧</h2>';
+                //記事のない時の処理
+                if (result.data.length === 0) {
+                    htmlContents += '<p>記事はありません</p>';
+                }
+
+                // 取得した配列データを一つずつループ処理でHTML化する
+                result.data.forEach();
+                /*
+                        <div class="post">
+                            ${post.id} : <strong>${post.name}</strong><br>
+                            ${post.content}<br>
+                            <small>${post.date}</small><br>
+                            <button class="delete" value="${post.id}">削除</button>
+                            <button class="edit" value="${post.id}">編集</button>
+                            <div id="post-${post.id}" style="display:none">
+                                <span class="name">${post.name}</span>
+                                <span class="content">${post.content}</span>
+                            </div>
+                        </div>`;
+                */
+
+                // メモリ上で作成したHTMLを一括でDOMに反映（描画負荷を抑える）
+            } catch (error) {
+                console.error("データ取得に失敗しました:", error);
+            }
+        }
+
+        /**
+         * 3. イベント：新規投稿 (POST)
+         * [処理フロー]
+         * ① 送信ボタンのクリックイベントを設定
+         * ② フォーム（名前・内容）の値を取得し、未入力チェックを行う
+         * ③ fetchを使用して API(/api/add) へPOSTメソッドでデータを送信
+         * ④ 送信完了後、フォームをクリアし、getPosts()を呼び出して一覧を再描画する
+         */
+        // ここに処理を記述
+        document.getElementById('submitBtn').addEventListener('click', async function() {
+            const API_ADD_URL = 'http://localhost:3000/api/add';
+            const name = document.getElementById('userName').value;
+            const content = document.getElementById('userContent').value;
+
+            // バリデーション：未入力での送信を防止
+            if (!name || !content) {
+                alert('名前と内容を入力してください');
+                return;
+            }
+
+            try {
+                // fetchの第2引数にメソッド、ヘッダー、送信データを指定
+                await fetch();
+                // 完了後にフォーム(userName userContent)を空にする
+
+                // サーバー側の最新状態を反映するために再読み込み
+                getPosts();
+            } catch (error) {
+                //エラー処理
+                console.error("投稿に失敗しました:", error);
+            }
+        });
+
+
+        /**
+         * 4. 関数：記事の削除 (POST)
+         * [引数] id : 削除対象の投稿ID
+         * [処理フロー]
+         * ① fetchを使用して API(/api/delete) へ対象IDを送信
+         * ② 削除完了後、getPosts()を呼び出して一覧を更新する
+         */
+        async function deletePost(id) {
+            // ここに処理を記述
+            const API_DELETE_URL = 'http://localhost:3000/api/delete';
+            try {
+                // fetchの第2引数にメソッド、ヘッダー、送信データを指定
+                await fetch();
+                getPosts(); // 削除後のリストを再取得
+            } catch (error) {
+                console.error("削除に失敗しました:", error);
+            }
+        }
+
+
+        // ここに処理を記述（イベント委譲を使うと効率的です）
+        //※動的に生成されたボタンには直接イベントを貼れないため、親要素(app)で検知する
+        app.addEventListener('click', function(e) {
+
+            const id = e.target.value;
+            
+            // クリックされた要素が「削除」クラスを持っていた場合
+            if (e.target.classList.contains('delete')) {
+                //削除処理の呼び出し
+                if(confirm('削除しますか？')) deletePost(id);
+            }
+            
+            // クリックされた要素が「編集」クラスを持っていた場合
+            if (e.target.classList.contains('edit')) {
+                // 隠しデータ領域から現在の値を取り出してフォームにセット（編集モードの開始）
+                const editData = document.getElementById('post-' + id);
+                document.getElementById('postId').value = id;
+                document.getElementById('userName').value = editData.querySelector('.name').textContent;
+                document.getElementById('userContent').value = editData.querySelector('.content').textContent;
+
+                // UIの切り替え
+                document.getElementById('submitBtn').style.display = 'none';
+                document.getElementById('editBtn').style.display = 'inline-block';
+                document.getElementById('cancelBtn').style.display = 'inline-block';
+            }
+        });
+        /**
+         * 6. イベント：編集内容の確定 (POST)
+         * [処理フロー]
+         * ① 編集確定ボタンのクリックイベントを設定
+         * ② 隠しフィールドのIDと、入力された名前・内容を取得
+         * ③ fetchを使用して API(/api/edit) へデータを送信
+         * ④ 完了後、キャンセル処理を実行してフォームを初期状態に戻し、一覧を再更新する
+         */
+        
+        // 編集確定ボタンの処理
+        document.getElementById('editBtn').addEventListener('click', async function() {
+            const API_EDIT_URL = 'http://localhost:3000/api/edit';
+
+            //フォームの値の取得
+            const id = document.getElementById('postId').value;
+            const name = document.getElementById('userName').value;
+            const content = document.getElementById('userContent').value;
+
+            try {
+                // fetchの第2引数にメソッド、ヘッダー、送信データを指定
+                await fetch();
+                // キャンセルボタンのクリック処理を呼び出してフォームを初期状態に戻す
+                
+                // 更新後のリストを表示
+            } catch (error) {
+                //エラー処理
+                console.error("編集の保存に失敗しました:", error);
+            }
+        });
+
+        document.getElementById('cancelBtn').addEventListener('click', function() {
+            /**
+             * 7. イベント：編集のキャンセル
+             * [処理フロー]
+             * ① 入力フォームの内容を空にする
+             * ② ボタンの表示状態を「新規投稿用（送信ボタンのみ）」に戻す
+             */
+            document.getElementById('postId').value = '';
+            document.getElementById('userName').value = '';
+            document.getElementById('userContent').value = '';
+            document.getElementById('submitBtn').style.display = 'inline-block';
+            document.getElementById('editBtn').style.display = 'none';
+            document.getElementById('cancelBtn').style.display = 'none';
+        });
+        /**
+         * 8. 初期実行
+         * ページ読み込み完了時(DOMContentLoaded)、最初に一度 getPosts() を実行すること
+         */
+        // ここに処理を記述
+
+
+    </script>
 </body>
 </html>
