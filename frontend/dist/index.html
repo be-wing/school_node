@@ -4,27 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>プログラミング実習：簡易掲示板</title>
-    <style>
-        /* 【CSS】投稿カードのデザイン。枠線や余白を設定してください */
-        .post {
-            padding: 0.5em;
-            margin-bottom: 0.5em;
-            border: 1px solid #CCC;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>簡易掲示板の作成</h1>
     
-    <div>
+    <div class="form-container">
         <input type="hidden" id="postId">
-
-        名前：<input type="text" id="userName"><br>
-        内容：<textarea id="userContent"></textarea><br>
+        <label for="userName">名前</label>
+        <input type="text" id="userName" placeholder="お名前を入力">
+        <label for="userContent">内容</label>
+        <textarea id="userContent" placeholder="メッセージを入力"></textarea>
         
-        <button type="button" id="submitBtn">送信</button>
-        <button type="button" id="editBtn" style="display: none;">編集</button>
-        <button type="button" id="cancelBtn" style="display: none;">キャンセル</button>
+        <div style="text-align: right;">
+            <button type="button" id="submitBtn">投稿する</button>
+            <button type="button" id="editBtn" style="display: none;">編集を保存</button>
+            <button type="button" id="cancelBtn" style="display: none;">キャンセル</button>
+        </div>
     </div>
 
     <div id="app"></div>
@@ -208,8 +204,6 @@
          * ページ読み込み完了時(DOMContentLoaded)、最初に一度 getPosts() を実行すること
          */
         // ここに処理を記述
-
-
     </script>
 </body>
 </html>

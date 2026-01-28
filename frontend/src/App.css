@@ -1,42 +1,100 @@
+/* 全体のレイアウト設定 */
 #root {
-  max-width: 1280px;
+  max-width: 800px; /* 読みやすい幅に制限 */
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #333;
+  text-align: left; /* 基本は左寄せ */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+h1, h2 {
+  color: #2c3e50;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* 入力フォームエリアのスタイル */
+.input-container {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.input-container h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
 }
 
-.card {
-  padding: 2em;
+.input-field {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box; /* パディングを含めた幅計算 */
 }
 
-.read-the-docs {
+textarea.input-field {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* 記事カードのスタイル */
+.post-card {
+  background: white;
+  border: 1px solid #e1e4e8;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 15px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.post-id {
   color: #888;
+  font-size: 0.9rem;
 }
+
+.post-name {
+  font-size: 1.1rem;
+  margin-left: 8px;
+}
+
+.post-content {
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+.post-date {
+  font-size: 0.8rem;
+  color: #999;
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* ボタンの共通スタイル */
+button {
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  font-weight: bold;
+  transition: opacity 0.2s;
+  margin-right: 8px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* ボタンごとの色分け */
+.btn-primary { background-color: #007bff; color: white; }
+.btn-edit { background-color: #28a745; color: white; }
+.btn-delete { background-color: #dc3545; color: white; }
+.btn-cancel { background-color: #6c757d; color: white; }
